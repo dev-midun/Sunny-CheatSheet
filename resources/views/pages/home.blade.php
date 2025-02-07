@@ -6,8 +6,7 @@
 
 <div class="row mb-2">
     <div class="col d-flex">
-        <button class="btn btn-primary btn-lg waves-effect waves-light me-2" 
-                type="button" id="new-questions">
+        <button class="btn btn-primary btn-lg waves-effect waves-light me-2" type="button" id="new-questions">
             <i class="bx bx-plus"></i><span class="d-none d-lg-inline">New</span>
         </button>
         <div class="flex-grow-1">
