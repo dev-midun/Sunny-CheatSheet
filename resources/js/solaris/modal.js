@@ -173,7 +173,7 @@ export default class Modal {
         this.form.form.setAttribute("solar-form-method", this.#mode == 'edit' ? "PUT" : "POST")
         if(this.#mode == 'new') {
             if(this.form.form.getAttribute('action')) {
-                this.form.form.setAttribute("solar-form-action", this.#url)
+                this.form.form.setAttribute("action", this.#url)
             } else {
                 this.form.form.setAttribute("solar-form-action", this.#url)
             }
