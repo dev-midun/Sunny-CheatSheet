@@ -6,13 +6,10 @@
 
 <div class="row mb-2">
     <div class="col d-flex">
-        <x-button
-            id="new-questions"
-            label="New"
-            icon="bx bx-plus"
-            size="lg"
-            className="me-2"
-        />
+        <button class="btn btn-primary btn-lg waves-effect waves-light me-2" 
+                type="button" id="new-questions">
+            <i class="bx bx-plus"></i><span class="d-none d-lg-inline">New</span>
+        </button>
         <div class="flex-grow-1">
             <x-input
                 type="search"

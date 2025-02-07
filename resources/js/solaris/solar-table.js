@@ -782,7 +782,7 @@ export default class SolarTable {
             const footerHeight = document.querySelector('footer.footer')?.offsetHeight ?? 0
 
             this.#config.stateSave = true
-            this.#config.scrollY = (windowHeight - headerHeight - footerHeight - 100)
+            this.#config.scrollY = (windowHeight - headerHeight - footerHeight - 110)
             this.#config.scrollCollapse = true
         }
 
@@ -962,79 +962,13 @@ export default class SolarTable {
         })
     }
 
-    async #getInfiniteScrollUpAjax(state, data, callback, api) {
-        const url = this.#ajax
-        
-        if(state.totalData >= state.maxData) {
-            const rowsToDelete = api.rows().indexes().toArray().reverse().slice(0, state.length)
-            api.rows(rowsToDelete).remove()
-
-            state.totalData -= rowsToDelete.length
-            state.start -= rowsToDelete.length
-            state.endIndex -= rowsToDelete.length
-            state.startIndex -= rowsToDelete.length
-
-            setTimeout(() => {
-                callback({
-                    draw: data.draw,
-                    recordsTotal: state.recordsTotal,
-                    recordsFiltered: state.recordsFiltered,
-                    data: api.data()
-                })
-            }, 100)
-        }
-
-        let start = state.startIndex
-        let length = state.length
-        
-        const fetchData = await this.#fetchData({
-            url: url, 
-            draw: data.draw, 
-            start: start, 
-            length: length,
-            data: data
-        })
-
-        state.recordsTotal = fetchData.recordsTotal
-        state.recordsFiltered = fetchData.recordsFiltered
-        state.totalData += fetchData.data.length
-
-        const oldData = api.data().toArray()
-        const newData = fetchData.data.concat(oldData)
-
-        api.clear()
-        api.rows.add(newData)
-
-        callback({
-            draw: data.draw,
-            recordsTotal: fetchData.recordsTotal,
-            recordsFiltered: fetchData.recordsFiltered,
-            data: api.data()
-        })
-    }
-
     async #getInfiniteScrollDownAjax(state, data, callback, api) {
         const url = this.#ajax
 
-        if(state.totalData > state.maxData) {
-            const rowsToDelete = api.rows().indexes().toArray().slice(0, state.removeOldData)
-            api.rows(rowsToDelete).remove()
-
-            state.totalData -= rowsToDelete.length
-            state.startIndex += rowsToDelete.length
-
-            callback({
-                draw: data.draw,
-                recordsTotal: state.recordsTotal,
-                recordsFiltered: state.recordsFiltered,
-                data: api.data()
-            })
-
-            return
-        }
-
-        let start = state.start
+        let start = state.endIndex > 0 && state.start == 0 ? state.endIndex : state.start
         let length = state.length
+
+        console.log({start, length})
 
         const fetchData = await this.#fetchData({
             url: url, 
@@ -1051,7 +985,7 @@ export default class SolarTable {
 
         api.rows.add(fetchData.data)
 
-        state.start += state.length
+        state.start += fetchData.data.length
 
         callback({
             draw: data.draw,
@@ -1346,37 +1280,24 @@ export default class SolarTable {
                     state.scroll = 'down'
 
                     this.#dataTable.draw(false)
-                } else if(dtScrollBody.scrollTop === 0 && state.startIndex > 0) {
-                    state.scroll = 'up'
-
-
-                    this.#dataTable.draw(false)
                 }
 
                 updateDtInfo()
             })
-            
-            let previousScrollHeight = 0
+
             this.#dataTable
                 .on('preDraw.dt', () => {
-                    if(state.scroll == 'up') {
-                        previousScrollHeight = dtScrollBody.scrollHeight
-                    } else {
-                        currentScroll = dtScrollBody.scrollTop
-                    }
+                    currentScroll = dtScrollBody.scrollTop
                 })
                 .on('draw.dt', () => {
-                    if(state.scroll == 'up') {
-                        const newScrollHeight = dtScrollBody.scrollHeight
-                        const addedHeight = newScrollHeight - previousScrollHeight
-                        dtScrollBody.scrollTop = addedHeight
-
-
-                    } else {
-                        dtScrollBody.scrollTop = currentScroll
-                    }
-
+                    dtScrollBody.scrollTop = currentScroll
                     updateDtInfo()
+
+                    if(this.#infiniteScrollState.start == 0) {
+                        $(dtScrollBody).animate({
+                            scrollTop: $(dtScrollBody).offset().top
+                        }, 'slow')
+                    }
                 })
 
             updateDtInfo()

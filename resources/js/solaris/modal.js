@@ -115,8 +115,12 @@ export default class Modal {
         this.setMode('edit')
         
         const updateUrl = new URL(id, this.#url.endsWith("/") ? this.#url : this.#url + "/").href
-        this.form.form.setAttribute("action", updateUrl)
-        this.form.form.setAttribute("solar-form-action", updateUrl)
+
+        if(this.form.form.getAttribute('action')) {
+            this.form.form.setAttribute("solar-form-action", updateUrl)
+        } else {
+            this.form.form.setAttribute("solar-form-action", updateUrl)
+        }
 
         this.#modal.show()
 
@@ -168,7 +172,11 @@ export default class Modal {
         this.#mode = mode.toLowerCase()
         this.form.form.setAttribute("solar-form-method", this.#mode == 'edit' ? "PUT" : "POST")
         if(this.#mode == 'new') {
-            this.form.form.setAttribute("action", this.#url)
+            if(this.form.form.getAttribute('action')) {
+                this.form.form.setAttribute("solar-form-action", this.#url)
+            } else {
+                this.form.form.setAttribute("solar-form-action", this.#url)
+            }
         }
     }
 
