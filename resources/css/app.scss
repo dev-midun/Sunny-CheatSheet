@@ -1,0 +1,188 @@
+@import '../velzon/scss/bootstrap.scss';
+@import '../velzon/scss/icons.scss';
+
+// library
+
+@import './lib/datatable.scss';
+@import 'select2/dist/css/select2.min.css';
+@import 'sweetalert2/src/sweetalert2.scss';
+
+// end library
+
+@import '../velzon/scss/app.scss';
+
+@media (min-width: 1024.1px) {
+    [data-layout=horizontal] .page-content {
+        margin-top: 35px;
+    }
+}
+
+.navbar-header {
+    border-bottom: 1px solid var(--vz-header-border);
+}
+
+.navbar-menu .navbar-nav .nav-link {
+    font-size: 1.0335rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar-menu .navbar-nav .nav-sm .nav-link {
+    font-size: 0.984375rem;
+}
+
+.navbar-header .topbar-head-dropdown .notification-actions {
+    position: unset;
+}
+
+.page-title-box {
+    margin: unset;
+}
+
+.divider {
+    display: block;
+    text-align: center;
+    margin: 1rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.divider .divider-text {
+    position: relative;
+    display: inline-block;
+    font-size: 0.875rem;
+    padding: 0rem 1rem;
+    color: #444050;
+}
+.divider .divider-text:before, .divider .divider-text:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 100vw;
+    border-top: 1px solid rgba(47, 43, 61, 0.12);
+}
+.divider .divider-text:before {
+    right: 100%;
+}
+.divider .divider-text:after {
+    left: 100%;
+}
+
+.btn-icon-facebook { 
+    --vz-btn-color: #1877f2;
+    --vz-btn-bg: transparent;
+    --vz-btn-border-color: transparent;
+    --vz-btn-hover-color: #1877f2;
+    --vz-btn-hover-bg: rgba(24, 119, 242, 0.1);
+    --vz-btn-hover-border-color: transparent;
+    --vz-btn-focus-shadow-rgb: 24, 119, 242;
+    --vz-btn-active-color: #1877f2;
+    --vz-btn-active-bg: rgba(24, 119, 242, 0.2);
+    --vz-btn-active-border-color: transparent;
+}
+
+.blockUI {
+    &.blockOverlay,
+    &.blockMsg {
+        z-index: $zindex-modal + 1 !important;
+        color: $white !important;
+    }
+}
+
+.form-control.is-invalid + i {
+    padding-right: 1rem;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+.cell-fit {
+    width: 1%;
+    white-space: nowrap;
+}
+
+select.form-select.is-invalid + span.select2-container .selection .select2-selection {
+    border-color: var(--vz-form-invalid-border-color);
+}
+
+select option:not([value]), 
+select option[value=""] {
+    color: #999;
+}
+
+.profile-user .user-profile-image {
+    box-shadow: 0 .5rem 1.5rem .5rem rgba(0, 0, 0, .075);
+}
+
+.table-card .dt-layout-full {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.table-card:not(.table-card-ui) .dt-layout-start {
+    padding-left: 0;
+}
+
+.table-card:not(.table-card-ui) .dt-length {
+    margin-right: 0 !important;
+}
+
+.table-card .dt-info {
+    padding-left: 0;
+    padding-bottom: 0;
+}
+
+.table-card:not(.table-card-ui) .dt-search {
+    padding-right: 0;
+}
+
+.table-card-ui table tbody td {
+    display: block;
+}
+
+.table-card-ui table thead, .table-card-ui tbody, .table-card-ui tfoot, .table-card-ui tr, .table-card-ui td, .table-card-ui th {
+    border-style: unset;
+}
+
+.table-card-ui table.table > :not(caption) > * > * {
+    padding-top: 0 !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.table-card-ui .dt-length, .table-card-ui .dt-info, .table-card-ui .dt-search {
+    padding-top: 0rem !important
+}
+
+.table-card-ui .dt-search {
+    padding-left: 0rem !important
+}
+
+.table-card-ui .dt-layout-end {
+    padding-right: 0rem !important
+}
+
+.table-card-ui .dt-paging {
+    padding: 0 !important
+}
+
+.table-card-ui table.dataTable td.dt-empty {
+    --vz-table-accent-bg: transparent
+}
+
+.table-card-ui div.dt-container div.dt-layout-end>*:not(:first-child) {
+    margin-left: 0;
+}
